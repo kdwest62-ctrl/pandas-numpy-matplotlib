@@ -1,0 +1,16 @@
+import pandas as pd
+
+path = input("CSV path: ")
+df = pd.read_csv(path)
+print(df.to_string())
+print('-' * 8)
+print(df['class'].value_counts())
+print('-' * 8)
+class_a_males = ((df['gender'] == "M") & (df['class'] == 'Class A')).sum()
+class_a_females = ((df['gender'] == "F") & (df['class'] == 'Class A')).sum()
+class_b_males = ((df['gender'] == "M") & (df['class'] == 'Class B')).sum()
+class_b_females = ((df['gender'] == "F") & (df['class'] == 'Class B')).sum()
+print(f"Class A male students: {class_a_males}")
+print(f"Class A female students: {class_a_females}")
+print(f"Class B male students: {class_b_males}")
+print(f"Class B female students: {class_b_females}")
