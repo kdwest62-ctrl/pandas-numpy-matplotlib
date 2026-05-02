@@ -1,7 +1,21 @@
 import pandas as pd
 
-path = input("CSV file: ")
+path = input("CSV path: ")
 df = pd.read_csv(path)
+results = df['Result (W/L/D)'].tolist()
+win = []
+lost = []
+draw = []
+for result in results:
+    if result == 'W':
+        win.append(result)
+    elif result == 'L':
+        lost.append(result)
+    elif result == 'D':
+        draw.append(result)
+print(f"Team record [W: {len(win)} | L: {len(lost)} | D: {len(draw)}]")
+print(f"Total points: {(len(win)*3) + (len(draw)*1)}")
+
 scored = df['Goals_For'].sum()
 conceded = df['Goals_Against'].sum()
 played = df['Result (W/L/D)'].count()
