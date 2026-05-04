@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-path = r'C:\Users\KEAR\Documents\CSV\football_data.csv'
+path = input("CSV path: ")
 df = pd.read_csv(path)
 print(df.to_string())
 print('-'* 8)
