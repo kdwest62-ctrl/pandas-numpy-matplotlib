@@ -9,18 +9,8 @@ df['Goals_Against'] = df['Goals_Against'].astype('Int64')
 print(df.to_string())
 print('-'* 8)
 results = df['Result (W/L/D)'].tolist()
-win = []
-lost = []
-draw = []
-for result in results:
-    if result == 'W':
-        win.append(result)
-    elif result == 'L':
-        lost.append(result)
-    elif result == 'D':
-        draw.append(result)
-print(f"Team record [W: {len(win)} | L: {len(lost)} | D: {len(draw)}]")
-print(f"Total points: {(len(win)*3) + (len(draw)*1)}")
+print(f"Team record [W: {results.count('W')} | L: {results.count('L')} | D: {results.count('D')}]")
+print(f"Total points: {results.count('W')*3 + results.count('D')*1}")
 
 scored = df['Goals_For'].sum()
 conceded = df['Goals_Against'].sum()
