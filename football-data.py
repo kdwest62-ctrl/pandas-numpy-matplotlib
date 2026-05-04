@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 
 path = input("CSV path: ")
 df = pd.read_csv(path)
+df['Goals_For'] = df['Goals_For'].astype('Int64')
+df['Goals_Against'] = df['Goals_Against'].astype('Int64')
 print(df.to_string())
 print('-'* 8)
 results = df['Result (W/L/D)'].tolist()
