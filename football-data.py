@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 path = input("CSV path: ")
 df = pd.read_csv(path)
