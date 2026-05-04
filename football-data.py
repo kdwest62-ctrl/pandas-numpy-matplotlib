@@ -32,7 +32,7 @@ y = df['Result (W/L/D)'].dropna().tolist()
 x = df['Match_Number'].tolist()
 while len(x) > len(y):
     del x[-1]
-plt.plot(x, y)
+plt.plot(x[-5:], y[-5:])
 plt.title("Form Guide")
 plt.xlabel("Match Number")
 plt.ylabel("Result (W/L/D)")
