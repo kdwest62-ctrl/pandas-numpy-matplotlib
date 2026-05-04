@@ -1,6 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-import numpy as np
 
 path = input("CSV path: ")
 df = pd.read_csv(path)
@@ -25,9 +24,8 @@ y = df['Result (W/L/D)'].dropna().tolist()
 x = df['Match_Number'].tolist()
 while len(x) > len(y):
     del x[-1]
-plt.plot(x[-5:], y[-5:], color="red", markersize=10,
+plt.plot(x, y, color="red", markersize=10,
          marker=".", markerfacecolor="pink")
-plt.xticks(np.arange(x[-5], x[-1] + 1, step=1))
 plt.title("Form Guide")
 plt.xlabel("Match Number")
 plt.ylabel("Result (W/L/D)")
