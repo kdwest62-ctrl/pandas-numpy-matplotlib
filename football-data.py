@@ -28,8 +28,10 @@ print(f"Goals scored: {int(scored)} | average: {scored / played}")
 print(f"Goals conceded: {int(conceded)} | average: {conceded / played}")
 print(f"Goal difference: {int(scored - conceded)}")
 
+y = df['Result (W/L/D)'].dropna().tolist()
 x = df['Match_Number'].tolist()
-y = df['Result (W/L/D)'].tolist()
+while len(x) > len(y):
+    del x[-1]
 plt.plot(x, y)
 plt.title("Form Guide")
 plt.xlabel("Match Number")
