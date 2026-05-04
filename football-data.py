@@ -1,6 +1,7 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
-path = input("CSV path: ")
+path = r'C:\Users\KEAR\Documents\CSV\football_data.csv'
 df = pd.read_csv(path)
 print(df.to_string())
 print('-'* 8)
@@ -26,3 +27,12 @@ print(f"Matches played: {played} | remaining: {remain}")
 print(f"Goals scored: {int(scored)} | average: {scored / played}")
 print(f"Goals conceded: {int(conceded)} | average: {conceded / played}")
 print(f"Goal difference: {int(scored - conceded)}")
+
+x = df['Match_Number'].tolist()
+y = df['Result (W/L/D)'].tolist()
+plt.plot(x, y)
+plt.title("Form Guide")
+plt.xlabel("Match Number")
+plt.ylabel("Result (W/L/D)")
+plt.gca().invert_yaxis()
+plt.show()
