@@ -16,3 +16,7 @@ for item in a:
     items_sold.append(sum(result))
 b = dict(zip(a, items_sold))
 print(b)
+
+for k, v in b.items():
+    if max(b.values()) == b[k]:
+        print(f"Best seller: {k} with {v} units sold")
