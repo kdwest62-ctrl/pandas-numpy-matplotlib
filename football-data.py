@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 
 path = input("CSV path: ")
 df = pd.read_csv(path)
+
+print("1. Show CSV\n2. Totals\n3. Averages\n4. Simulation\n5. Graphs")
 df['Goals_For'] = df['Goals_For'].astype('Int64')
 df['Goals_Against'] = df['Goals_Against'].astype('Int64')
 print(df.to_string())
