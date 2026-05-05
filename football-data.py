@@ -22,6 +22,11 @@ print(f"Goals scored: {scored} | average: {scored / played}")
 print(f"Goals conceded: {conceded} | average: {conceded / played}")
 print(f"Goal difference: {scored - conceded}")
 
+a = [results.count('W'), results.count('L'), results.count('D')]
+labels = ['W', 'L', 'D']
+plt.pie(a, labels=labels)
+plt.show()
+
 y = df['Result (W/L/D)'].dropna().tolist()
 x = df['Match_Number'].tolist()
 while len(x) > len(y):
