@@ -12,7 +12,7 @@ while True:
     if choice == '1':
         print(df.to_string())
     elif choice == '2':
-
+        pass
     elif choice == '3':
         chart = input("a. Results\nb. Cumulative goal difference\nc. Home vs Away performance\nd. Season form guide\ne. Best win streak")
         if chart == 'a':
@@ -23,7 +23,9 @@ while True:
         elif chart == 'b':
             pass
         elif chart == 'c':
+            pass
         elif chart == 'd':
+            pass
         elif chart == 'e':
             pass
         else:
@@ -47,8 +49,6 @@ print(f"Matches played: {played} | remaining: {remain}")
 print(f"Goals scored: {scored} | average: {scored / played}")
 print(f"Goals conceded: {conceded} | average: {conceded / played}")
 print(f"Goal difference: {scored - conceded}")
-
-
 
 y = df['Result (W/L/D)'].dropna().tolist()
 x = df['Match_Number'].tolist()
