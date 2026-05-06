@@ -8,13 +8,14 @@ df['Goals_For'] = df['Goals_For'].astype('Int64')
 df['Goals_Against'] = df['Goals_Against'].astype('Int64')
 results = df['Result (W/L/D)'].tolist()
 while True:
-    choice = input("Select option (input number):")
+    choice = input("Select option (num): ")
     if choice == '1':
         print(df.to_string())
     elif choice == '2':
         pass
     elif choice == '3':
-        chart = input("a. Results\nb. Cumulative goal difference\nc. Home vs Away performance\nd. Season form guide\ne. Best win streak")
+        print("a. Results\nb. Cumulative goal difference\nc. Home vs Away performance\nd. Season form guide\ne. Best win streak")
+        chart = input("Select chart (num): ")
         if chart == 'a':
             a = [results.count('W'), results.count('L'), results.count('D')]
             labels = ['W', 'L', 'D']
