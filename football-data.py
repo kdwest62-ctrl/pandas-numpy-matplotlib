@@ -13,7 +13,14 @@ while True:
     elif choice == '2':
 
     elif choice == '3':
-
+        chart = input("a. Results\nb. Cumulative goal difference\nc. Home vs Away performance\nd. Season form guide\ne. Best win streak")
+        if chart == 'a':
+        elif chart == 'b':
+        elif chart == 'c':
+        elif chart == 'd':
+        elif chart == 'e':
+        else:
+            print("Chart not available")
     elif choice == '4':
 
     elif choice == '5':
