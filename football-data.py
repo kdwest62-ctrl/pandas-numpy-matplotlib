@@ -6,6 +6,7 @@ df = pd.read_csv(path)
 print("1. Show CSV\n2. Statistical Analysis\n3. Charts\n4. Simulate remaining matches\n5. Exit")
 df['Goals_For'] = df['Goals_For'].astype('Int64')
 df['Goals_Against'] = df['Goals_Against'].astype('Int64')
+results = df['Result (W/L/D)'].tolist()
 while True:
     choice = input("Select option (input number):")
     if choice == '1':
@@ -15,20 +16,26 @@ while True:
     elif choice == '3':
         chart = input("a. Results\nb. Cumulative goal difference\nc. Home vs Away performance\nd. Season form guide\ne. Best win streak")
         if chart == 'a':
+            a = [results.count('W'), results.count('L'), results.count('D')]
+            labels = ['W', 'L', 'D']
+            plt.pie(a, labels=labels)
+            plt.show()
         elif chart == 'b':
+            pass
         elif chart == 'c':
         elif chart == 'd':
         elif chart == 'e':
+            pass
         else:
             print("Chart not available")
     elif choice == '4':
-
+        pass
     elif choice == '5':
         break
     else:
         print("Option not available")
 
-results = df['Result (W/L/D)'].tolist()
+
 print(f"Team record [W: {results.count('W')} | L: {results.count('L')} | D: {results.count('D')}]")
 print(f"Total points: {results.count('W')*3 + results.count('D')*1}")
 
@@ -41,10 +48,7 @@ print(f"Goals scored: {scored} | average: {scored / played}")
 print(f"Goals conceded: {conceded} | average: {conceded / played}")
 print(f"Goal difference: {scored - conceded}")
 
-a = [results.count('W'), results.count('L'), results.count('D')]
-labels = ['W', 'L', 'D']
-plt.pie(a, labels=labels)
-plt.show()
+
 
 y = df['Result (W/L/D)'].dropna().tolist()
 x = df['Match_Number'].tolist()
