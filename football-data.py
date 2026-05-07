@@ -24,7 +24,7 @@ while True:
         print(f"Goal difference: {scored - conceded}")
     elif choice == '3':
         print("a. Results\nb. Cumulative goal difference\nc. Home vs Away performance\nd. Season form guide\ne. Best win streak")
-        chart = input("Select chart (num): ")
+        chart = input("Select chart (letter): ")
         if chart == 'a':
             a = [results.count('W'), results.count('L'), results.count('D')]
             labels = ['W', 'L', 'D']
