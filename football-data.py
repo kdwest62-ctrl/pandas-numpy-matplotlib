@@ -31,14 +31,25 @@ while True:
             plt.pie(a, labels=labels)
             plt.show()
         elif chart == 'b':
-            pass
+            x = df['Match_Number'].tolist()
+            y1 = df['Goal_Difference'].tolist()
+            y = []
+            for i in y1:
+                if len(y) == 0:
+                    y.append(i)
+                else:
+                    num = i + y[-1]
+                    y.append(num)
+            plt.plot(x, y, color="orange", marker="+")
+            plt.title("Cumulative Goal Difference")
+            plt.xlabel("Match Number")
+            plt.ylabel("Goal Difference")
+            plt.show()
         elif chart == 'c':
             pass
         elif chart == 'd':
-            y = df['Result (W/L/D)'].dropna().tolist()
+            y = df['Result (W/L/D)'].tolist()
             x = df['Match_Number'].tolist()
-            while len(x) > len(y):
-                del x[-1]
             plt.plot(x, y, color="blue", markersize=10,
                      marker=".", markerfacecolor="cyan")
             plt.title("Form Guide")
