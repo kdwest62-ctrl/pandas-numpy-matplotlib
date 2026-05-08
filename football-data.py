@@ -46,7 +46,20 @@ while True:
             plt.ylabel("Goal Difference")
             plt.show()
         elif chart == 'c':
-            pass
+            home_matches = df[df['Home/Away'] == 'H']
+            home_results_list = home_matches['Result (W/L/D)'].tolist()
+            away_matches = df[df['Home/Away'] == 'A']
+            away_results_list = away_matches['Result (W/L/D)'].tolist()
+            fig, (ax1, ax2) = plt.subplots(1, 2)
+            ax1.bar(['W', 'L', 'D'],
+                    [home_results_list.count('W'), home_results_list.count('L'), home_results_list.count('D')])
+            ax1.set_title('First Plot')
+            ax2.bar(['W', 'L', 'D'],
+                    [away_results_list.count('W'), away_results_list.count('L'), away_results_list.count('D')])
+            ax2.set_title('Second Plot')
+            plt.ylim(top=max(home_results_list.count('W'), home_results_list.count('L'), home_results_list.count('D')))
+            plt.tight_layout()
+            plt.show()
         elif chart == 'd':
             y = df['Result (W/L/D)'].tolist()
             x = df['Match_Number'].tolist()
