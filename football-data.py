@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
 
 path = input("CSV path: ")
 df = pd.read_csv(path)
@@ -32,14 +33,8 @@ while True:
             plt.show()
         elif chart == 'b':
             x = df['Match_Number'].tolist()
-            y1 = df['Goal_Difference'].tolist()
-            y = []
-            for i in y1:
-                if len(y) == 0:
-                    y.append(i)
-                else:
-                    num = i + y[-1]
-                    y.append(num)
+            y1 = np.array(df['Goal_Difference'].tolist())
+            y = np.cumsum(y1)
             plt.plot(x, y, color="orange", marker="+")
             plt.title("Cumulative Goal Difference")
             plt.xlabel("Match Number")
