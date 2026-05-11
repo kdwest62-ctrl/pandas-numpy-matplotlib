@@ -24,7 +24,7 @@ while True:
         print(f"Goals conceded: {conceded} | average: {conceded / played}")
         print(f"Goal difference: {scored - conceded}")
     elif choice == '3':
-        print("a. Results\nb. Cumulative goal difference\nc. Home vs Away performance\nd. Season form guide\ne. Best win streak")
+        print("a. Results\nb. Cumulative goal difference\nc. Home vs Away performance\nd. Season form guide")
         chart = input("Select chart (letter): ")
         if chart == 'a':
             a = [results.count('W'), results.count('L'), results.count('D')]
@@ -65,8 +65,6 @@ while True:
             plt.ylabel("Result (W/L/D)")
             plt.gca().invert_yaxis()
             plt.show()
-        elif chart == 'e':
-            pass
         else:
             print("Chart not available")
     elif choice == '4':
