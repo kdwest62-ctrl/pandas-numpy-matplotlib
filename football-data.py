@@ -17,12 +17,49 @@ while True:
     if choice == '1':
         print(df.to_string())
     elif choice == '2':
-        print(f"Team record [W: {results.count('W')} | L: {results.count('L')} | D: {results.count('D')}]")
-        print(f"Total points: {results.count('W') * 3 + results.count('D') * 1}")
-        print(f"Matches played: {played} | remaining: {38 - played}")
-        print(f"Goals scored: {scored} | average: {scored / played}")
-        print(f"Goals conceded: {conceded} | average: {conceded / played}")
-        print(f"Goal difference: {scored - conceded}")
+        home_matches = df[df['Home/Away'] == 'H']
+        home_goals_for = home_matches['Goals_For'].tolist()
+        home_goals_against = home_matches['Goals_Against'].tolist()
+        home_goal_diff = home_matches['Goal_Difference'].tolist()
+        home_results = home_matches['Result (W/L/D)'].tolist()
+        home_points = home_results.count('W') * 3 + home_results.count('D') * 1
+        total_home_goals_for = sum(home_goals_for)
+        total_home_goals_against = sum(home_goals_against)
+        total_home_goal_diff = sum(home_goal_diff)
+
+        away_matches = df[df['Home/Away'] == 'A']
+        away_goals_for = away_matches['Goals_For'].tolist()
+        away_goals_against = away_matches['Goals_Against'].tolist()
+        away_goal_diff = away_matches['Goal_Difference'].tolist()
+        away_results = away_matches['Result (W/L/D)'].tolist()
+        away_points = away_results.count('W') * 3 + away_results.count('D') * 1
+        total_away_goals_for = sum(away_goals_for)
+        total_away_goals_against = sum(away_goals_against)
+        total_away_goal_diff = sum(away_goal_diff)
+
+        matches_played = len(home_results) + len(away_results)
+        total_points = home_points + away_points
+        points_per_match = total_points / matches_played
+        total_goals_for = total_home_goals_for + total_away_goals_for
+        total_goals_against = total_home_goals_against + total_away_goals_against
+        total_goal_diff = total_home_goal_diff + total_away_goal_diff
+
+        print(f"Matches played: {len(results)}")
+        print(f"Record (W/L/D): {results.count('W')}-{results.count('L')}-{results.count('D')}")
+        print(f"Home record: {home_results.count('W')}-{home_results.count('L')}-{home_results.count('D')}")
+        print(f"Away record: {away_results.count('W')}-{away_results.count('L')}-{away_results.count('D')}")
+        data = {'Data': ['Goals For', 'Goals Against', 'Goal Difference', 'Points'],
+                'Season (total)': [total_goals_for, total_goals_against, total_goal_diff, total_points],
+                'Home (total)': [total_home_goals_for, total_home_goals_against, total_home_goal_diff, home_points],
+                'Away (total)': [total_away_goals_for, total_away_goals_against, total_away_goal_diff, away_points],
+                'Season (average)': list(map(lambda n: n / len(results),
+                                             [total_goals_for, total_goals_against, total_goal_diff, total_points])),
+                'Home (average)': [total_home_goals_for / 25, total_home_goals_against / 25, total_home_goal_diff / 25,
+                                   home_points / 25],
+                'Away (average)': [total_away_goals_for / 25, total_away_goals_against / 25, total_away_goal_diff / 25,
+                                   away_points / 25]}
+        df = pd.DataFrame(data)
+        print(df.to_string())
     elif choice == '3':
         print("a. Results\nb. Cumulative goal difference\nc. Home vs Away performance\nd. Season form guide")
         chart = input("Select chart (letter): ")
