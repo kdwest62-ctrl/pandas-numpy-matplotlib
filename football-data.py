@@ -11,7 +11,7 @@ conceded = df['Goals_Against'].sum()
 played = df['Result (W/L/D)'].count()
 results = df['Result (W/L/D)'].tolist()
 print("Options")
-print("1. Show CSV\n2. Statistical Analysis\n3. Charts\n4. Simulate remaining matches\n5. Exit")
+print("1. Statistics\n2. Analysis\n3. Charts\n4. Simulate\n5. Exit")
 while True:
     choice = input("Select option (num): ")
     if choice == '1':
@@ -19,7 +19,7 @@ while True:
     elif choice == '2':
         pass
     elif choice == '3':
-        print("a. Results\nb. Cumulative goal difference\nc. Home vs Away performance\nd. Season form guide")
+        print("a. Results\nb. Cumulative Goal Difference\nc. Home vs Away Performance\nd. Season Form")
         chart = input("Select chart (letter): ")
         if chart == 'a':
             a = [results.count('W'), results.count('L'), results.count('D')]
