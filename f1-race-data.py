@@ -1,3 +1,7 @@
+import pandas as pd
+
+path = input("CSV path: ")
+df = pd.read_csv(path)
 print("Options")
 options = ["1. Statistics",
            "2. Championship Points Progression",
@@ -11,7 +15,7 @@ for option in options:
 while True:
     select = input("Select option (number): ")
     if select == '1':
-        pass
+        print(df.to_string())
     elif select == '2':
         pass
     elif select == '3':
