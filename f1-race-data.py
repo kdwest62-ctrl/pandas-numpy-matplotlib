@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 path = input("CSV path: ")
 df = pd.read_csv(path)
@@ -17,7 +18,16 @@ while True:
     if select == '1':
         print(df.to_string())
     elif select == '2':
-        pass
+        drivers = []
+        driver_list = df['driver_code'].tolist()
+        for item in driver_list:
+            if item not in drivers:
+                drivers.append(item)
+        for driver in drivers:
+            driver_column = df[df['driver_code'] == driver]
+            driver_points = driver_column['points_awarded'].tolist()
+            cum_points = np.cumsum(np.array(driver_points))
+            print(f"{driver} | {cum_points}")
     elif select == '3':
         pass
     elif select == '4':
