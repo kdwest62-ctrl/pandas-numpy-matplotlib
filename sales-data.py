@@ -15,7 +15,7 @@ for option in options:
 while True:
     select = input("Select option (number): ")
     if select == '1':
-        pass
+        print(df.to_string())
     elif select == '2':
         products = []
         for item in df['product_name'].to_list():
