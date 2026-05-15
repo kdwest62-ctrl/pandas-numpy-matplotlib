@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import random
 
 path = input("CSV path: ")
 df = pd.read_csv(path)
@@ -63,7 +64,65 @@ while True:
         else:
             print("Chart not available")
     elif choice == '4':
-        pass
+        results = df['Result (W/L/D)'].tolist()
+        remain = 38 - len(results)
+        order = 'AAHHA'
+        letters = []
+        for item in order:
+            if item in ['H', 'A']:
+                letters.append(item)
+        print(letters)
+
+        home_matches = df[df['Home/Away'] == 'H']
+        home_goals_for = home_matches['Goals_For'].tolist()
+        home_goals_against = home_matches['Goals_Against'].tolist()
+        home_gf_min = min(home_goals_for)
+        home_gf_max = max(home_goals_for)
+        home_ga_min = min(home_goals_against)
+        home_ga_max = max(home_goals_against)
+
+        away_matches = df[df['Home/Away'] == 'A']
+        away_goals_for = away_matches['Goals_For'].tolist()
+        away_goals_against = away_matches['Goals_Against'].tolist()
+        away_gf_min = min(away_goals_for)
+        away_gf_max = max(away_goals_for)
+        away_ga_min = min(away_goals_against)
+        away_ga_max = max(away_goals_against)
+
+        scores = []
+        for item in letters:
+            res = []
+            if item == 'H':
+                gf = random.randint(home_gf_min, home_gf_max)
+                ga = random.randint(home_ga_min, home_ga_max)
+                res.append(gf)
+                res.append(ga)
+                scores.append(res)
+            elif item == 'A':
+                gf = random.randint(away_gf_min, away_gf_max)
+                ga = random.randint(away_ga_min, away_ga_max)
+                res.append(gf)
+                res.append(ga)
+                scores.append(res)
+        print(scores)
+
+        goals_for = []
+        goals_against = []
+        for item in scores:
+            goals_for.append(item[0])
+            goals_against.append(item[1])
+        print(goals_for)
+        print(goals_against)
+
+        result = []
+        for item in scores:
+            if item[0] > item[1]:
+                result.append('W')
+            elif item[0] < item[1]:
+                result.append('L')
+            elif item[0] == item[1]:
+                result.append('D')
+        print(result)
     elif choice == '5':
         break
     else:
