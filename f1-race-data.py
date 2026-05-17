@@ -34,9 +34,11 @@ while True:
             driver_column = df[df['driver_code'] == driver]
             grid_pos = driver_column['starting_grid_position'].tolist()
             final_pos = driver_column['final_position'].tolist()
+            print(driver)
+            print(f"Grid positions: {grid_pos}")
+            print(f"Final positions: {final_pos}")
             correlation = np.corrcoef(grid_pos, final_pos)
-            has_nan = np.isnan(correlation).any()
-            print(f"{driver}\n{correlation}")
+            print(correlation)
             print('-' * 8)
     elif select == '4':
         pass
