@@ -1,7 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-import random
 from pathlib import Path
 
 path = Path(input("CSV path: "))
@@ -68,7 +67,7 @@ if 'football_data' in path.name:
         elif choice == '4':
             results = df['Result (W/L/D)'].tolist()
             remain = 38 - len(results)
-            order = 'AAHHA'
+            order = 'HA'
             letters = []
             for item in order:
                 if item in ['H', 'A']:
@@ -78,31 +77,63 @@ if 'football_data' in path.name:
             home_matches = df[df['Home/Away'] == 'H']
             home_goals_for = home_matches['Goals_For'].tolist()
             home_goals_against = home_matches['Goals_Against'].tolist()
-            home_gf_min = min(home_goals_for)
-            home_gf_max = max(home_goals_for)
-            home_ga_min = min(home_goals_against)
-            home_ga_max = max(home_goals_against)
 
             away_matches = df[df['Home/Away'] == 'A']
             away_goals_for = away_matches['Goals_For'].tolist()
             away_goals_against = away_matches['Goals_Against'].tolist()
-            away_gf_min = min(away_goals_for)
-            away_gf_max = max(away_goals_for)
-            away_ga_min = min(away_goals_against)
-            away_ga_max = max(away_goals_against)
 
             scores = []
             for item in letters:
                 res = []
                 if item == 'H':
-                    gf = random.randint(home_gf_min, home_gf_max)
-                    ga = random.randint(home_ga_min, home_ga_max)
+                    nums = []
+                    for num in home_goals_for:
+                        if num not in nums:
+                            nums.append(int(num))
+                    prob = []
+                    for i in nums:
+                        part = home_goals_for.count(i)
+                        whole = len(home_goals_for)
+                        percent = part / whole
+                        prob.append(percent)
+                    gf = np.random.choice(nums, p=prob)
+                    nums = []
+                    for num in home_goals_against:
+                        if num not in nums:
+                            nums.append(int(num))
+                    prob = []
+                    for i in nums:
+                        part = home_goals_against.count(i)
+                        whole = len(home_goals_against)
+                        percent = part / whole
+                        prob.append(percent)
+                    ga = np.random.choice(nums, p=prob)
                     res.append(gf)
                     res.append(ga)
                     scores.append(res)
                 elif item == 'A':
-                    gf = random.randint(away_gf_min, away_gf_max)
-                    ga = random.randint(away_ga_min, away_ga_max)
+                    nums = []
+                    for num in away_goals_for:
+                        if num not in nums:
+                            nums.append(int(num))
+                    prob = []
+                    for i in nums:
+                        part = away_goals_for.count(i)
+                        whole = len(away_goals_for)
+                        percent = part / whole
+                        prob.append(percent)
+                    gf = np.random.choice(nums, p=prob)
+                    nums = []
+                    for num in away_goals_against:
+                        if num not in nums:
+                            nums.append(int(num))
+                    prob = []
+                    for i in nums:
+                        part = away_goals_against.count(i)
+                        whole = len(away_goals_against)
+                        percent = part / whole
+                        prob.append(percent)
+                    ga = np.random.choice(nums, p=prob)
                     res.append(gf)
                     res.append(ga)
                     scores.append(res)
