@@ -66,10 +66,9 @@ if 'football_data' in path.name:
                 print("Chart not available")
         elif choice == '4':
             results = df['Result (W/L/D)'].tolist()
-            remain = 38 - len(results)
-            order = 'HA'
+            fixtures = input("Fixtures (example = HHA): ")
             letters = []
-            for item in order:
+            for item in fixtures:
                 if item in ['H', 'A']:
                     letters.append(item)
             print(letters)
@@ -77,63 +76,45 @@ if 'football_data' in path.name:
             home_matches = df[df['Home/Away'] == 'H']
             home_goals_for = home_matches['Goals_For'].tolist()
             home_goals_against = home_matches['Goals_Against'].tolist()
-
             away_matches = df[df['Home/Away'] == 'A']
             away_goals_for = away_matches['Goals_For'].tolist()
             away_goals_against = away_matches['Goals_Against'].tolist()
+
+            def get_nums(data):
+                output = []
+                for entry in data:
+                    if entry not in output:
+                        output.append(int(entry))
+                return output
+            def get_prob(data, num_list):
+                prob_per_num = []
+                for number in num_list:
+                    p = data.count(number)
+                    w = len(data)
+                    per = p / w
+                    prob_per_num.append(per)
+                return prob_per_num
 
             scores = []
             for item in letters:
                 res = []
                 if item == 'H':
-                    nums = []
-                    for num in home_goals_for:
-                        if num not in nums:
-                            nums.append(int(num))
-                    prob = []
-                    for i in nums:
-                        part = home_goals_for.count(i)
-                        whole = len(home_goals_for)
-                        percent = part / whole
-                        prob.append(percent)
-                    gf = np.random.choice(nums, p=prob)
-                    nums = []
-                    for num in home_goals_against:
-                        if num not in nums:
-                            nums.append(int(num))
-                    prob = []
-                    for i in nums:
-                        part = home_goals_against.count(i)
-                        whole = len(home_goals_against)
-                        percent = part / whole
-                        prob.append(percent)
-                    ga = np.random.choice(nums, p=prob)
+                    a = get_nums(home_goals_for)
+                    b = get_prob(home_goals_for, a)
+                    gf = np.random.choice(a, p=b)
+                    a = get_nums(home_goals_against)
+                    b = get_prob(home_goals_against, a)
+                    ga = np.random.choice(a, p=b)
                     res.append(gf)
                     res.append(ga)
                     scores.append(res)
                 elif item == 'A':
-                    nums = []
-                    for num in away_goals_for:
-                        if num not in nums:
-                            nums.append(int(num))
-                    prob = []
-                    for i in nums:
-                        part = away_goals_for.count(i)
-                        whole = len(away_goals_for)
-                        percent = part / whole
-                        prob.append(percent)
-                    gf = np.random.choice(nums, p=prob)
-                    nums = []
-                    for num in away_goals_against:
-                        if num not in nums:
-                            nums.append(int(num))
-                    prob = []
-                    for i in nums:
-                        part = away_goals_against.count(i)
-                        whole = len(away_goals_against)
-                        percent = part / whole
-                        prob.append(percent)
-                    ga = np.random.choice(nums, p=prob)
+                    a = get_nums(away_goals_for)
+                    b = get_prob(away_goals_for, a)
+                    gf = np.random.choice(a, p=b)
+                    a = get_nums(away_goals_against)
+                    b = get_prob(away_goals_against, a)
+                    ga = np.random.choice(a, p=b)
                     res.append(gf)
                     res.append(ga)
                     scores.append(res)
@@ -144,8 +125,6 @@ if 'football_data' in path.name:
             for item in scores:
                 goals_for.append(item[0])
                 goals_against.append(item[1])
-            print(goals_for)
-            print(goals_against)
 
             result = []
             for item in scores:
