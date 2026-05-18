@@ -52,7 +52,7 @@ while True:
         plt.bar(customers, products_bought)
         plt.title("Products Sold per Customer")
         plt.xlabel("Customers")
-        plt.ylabel("Products Bought")
+        plt.ylabel("Products Sold")
         plt.tight_layout()
         plt.show()
     elif select == '5':
