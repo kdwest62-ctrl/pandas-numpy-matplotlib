@@ -55,8 +55,8 @@ if 'football_data' in path.name:
             elif chart == 'd':
                 y = df['Result (W/L/D)'].tolist()
                 x = df['Match_Number'].tolist()
-                plt.plot(x, y, color="blue", markersize=10,
-                         marker=".", markerfacecolor="cyan")
+                plt.plot(x, y, color="red", markersize=10,
+                         marker=".", markerfacecolor="orange", linewidth=0.5, markeredgecolor="red")
                 plt.title("Form Guide")
                 plt.xlabel("Match Number")
                 plt.ylabel("Result (W/L/D)")
