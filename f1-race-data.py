@@ -50,3 +50,4 @@ while True:
         break
     else:
         print("Option unavailable")
+print("Program closed")
