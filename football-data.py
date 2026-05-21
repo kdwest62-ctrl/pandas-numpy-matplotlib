@@ -121,63 +121,57 @@ if 'football_data' in path.name:
 
             played = len(home_matches) + len(away_matches)
             print(f"Matches played: {played}")
-            remaining = 38 - played
-            print(f"Matches remaining: {remaining}")
-            schedule = list(input("Input schedule (example = HHA): "))
-            if len(schedule) == remaining:
-                count = 0
+            schedule = input("Input schedule (H/A): ")
+            count = 0
+            for match in schedule:
+                if match not in ['H', 'A']:
+                    count += 1
+            if count == 0:
+                scores = []
                 for match in schedule:
-                    if match not in ['H', 'A']:
-                        count += 1
+                    res = []
+                    if match == 'H':
+                        choices = get_nums(home_goals_for)
+                        probability = get_prob(home_goals_for, choices)
+                        gf = np.random.choice(choices, p=probability)
+                        choices = get_nums(home_goals_against)
+                        probability = get_prob(home_goals_against, choices)
+                        ga = np.random.choice(choices, p=probability)
+                        res.append(gf)
+                        res.append(ga)
+                        scores.append(res)
+                    elif match == 'A':
+                        choices = get_nums(away_goals_for)
+                        probability = get_prob(away_goals_for, choices)
+                        gf = np.random.choice(choices, p=probability)
+                        choices = get_nums(away_goals_against)
+                        probability = get_prob(away_goals_against, choices)
+                        ga = np.random.choice(choices, p=probability)
+                        res.append(gf)
+                        res.append(ga)
+                        scores.append(res)
 
-                if count == 0:
-                    scores = []
-                    for match in schedule:
-                        res = []
-                        if match == 'H':
-                            choices = get_nums(home_goals_for)
-                            probability = get_prob(home_goals_for, choices)
-                            gf = np.random.choice(choices, p=probability)
-                            choices = get_nums(home_goals_against)
-                            probability = get_prob(home_goals_against, choices)
-                            ga = np.random.choice(choices, p=probability)
-                            res.append(gf)
-                            res.append(ga)
-                            scores.append(res)
-                        elif match == 'A':
-                            choices = get_nums(away_goals_for)
-                            probability = get_prob(away_goals_for, choices)
-                            gf = np.random.choice(choices, p=probability)
-                            choices = get_nums(away_goals_against)
-                            probability = get_prob(away_goals_against, choices)
-                            ga = np.random.choice(choices, p=probability)
-                            res.append(gf)
-                            res.append(ga)
-                            scores.append(res)
+                goals_for = []
+                goals_against = []
+                results = []
+                for score in scores:
+                    goals_for.append(score[0])
+                    goals_against.append(score[1])
+                    if score[0] > score[1]:
+                        results.append('W')
+                    elif score[0] < score[1]:
+                        results.append('L')
+                    elif score[0] == score[1]:
+                        results.append('D')
 
-                    goals_for = []
-                    goals_against = []
-                    results = []
-                    for score in scores:
-                        goals_for.append(score[0])
-                        goals_against.append(score[1])
-                        if score[0] > score[1]:
-                            results.append('W')
-                        elif score[0] < score[1]:
-                            results.append('L')
-                        elif score[0] == score[1]:
-                            results.append('D')
-
-                    data = {'Home/Away': [i for i in schedule],
-                            'Goals_For': [i for i in goals_for],
-                            'Goals_Against': [i for i in goals_against],
-                            'Results (W/L/D)': [i for i in results]}
-                    df = pd.DataFrame(data)
-                    print(df.to_string())
-                else:
-                    print("Invalid input detected! Matches must only be H or A")
+                data = {'Home/Away': [i for i in schedule],
+                        'Goals_For': [i for i in goals_for],
+                        'Goals_Against': [i for i in goals_against],
+                        'Results (W/L/D)': [i for i in results]}
+                df = pd.DataFrame(data)
+                print(df.to_string())
             else:
-                print("Incorrect length of matches")
+                print("Invalid input detected! Matches must only be H or A")
         elif choice == '5':
             break
         else:
