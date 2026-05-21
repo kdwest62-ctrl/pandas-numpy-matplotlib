@@ -45,7 +45,24 @@ if 'football_data' in path.name:
         if choice == '1':
             print(df.to_string())
         elif choice == '2':
-            pass
+            print(f"Matches played: {len(results)}")
+            print(f"Home matches: {len(home_matches)}")
+            print(f"Away matches: {len(away_matches)}")
+            print(f"Record (W/L/D): {results.count('W')}-{results.count('L')}-{results.count('D')}")
+            print(f"Home record: {home_results.count('W')}-{home_results.count('L')}-{home_results.count('D')}")
+            print(f"Away record: {away_results.count('W')}-{away_results.count('L')}-{away_results.count('D')}")
+            data = {'': ['Goals For', 'Goals Against', 'Goal Difference', 'Points'],
+                    'Season (total)': [total_goals_for, total_goals_against, total_goal_diff, total_points],
+                    'Home (total)': [total_home_goals_for, total_home_goals_against, total_home_goal_diff, home_points],
+                    'Away (total)': [total_away_goals_for, total_away_goals_against, total_away_goal_diff, away_points],
+                    'Season (average)': list(map(lambda n: n / len(results),
+                                                 [total_goals_for, total_goals_against, total_goal_diff, total_points])),
+                    'Home (average)': list(map(lambda n: n / len(results),
+                                               [total_home_goals_for, total_home_goals_against, total_home_goal_diff, home_points])),
+                    'Away (average)': list(map(lambda n: n / len(results),
+                                               [total_away_goals_for, total_away_goals_against, total_away_goal_diff, away_points]))}
+            df = pd.DataFrame(data)
+            print(df.to_string())
         elif choice == '3':
             print("a. Results\nb. Cumulative Goal Difference\nc. Home vs Away Performance\nd. Season Form")
             chart = input("Select chart (letter): ")
@@ -87,17 +104,17 @@ if 'football_data' in path.name:
             else:
                 print("Chart not available")
         elif choice == '4':
-            def get_nums(data):
+            def get_nums(d):
                 nums = []
-                for entry in data:
+                for entry in d:
                     if entry not in nums:
                         nums.append(int(entry))
                 return nums
-            def get_prob(data, num_list):
+            def get_prob(d, num_list):
                 percentages = []
                 for num in num_list:
-                    part = data.count(num)
-                    whole = len(data)
+                    part = d.count(num)
+                    whole = len(d)
                     percent = part / whole
                     percentages.append(percent)
                 return percentages
