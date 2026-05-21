@@ -93,8 +93,6 @@ if 'football_data' in path.name:
                     if entry not in nums:
                         nums.append(int(entry))
                 return nums
-
-
             def get_prob(data, num_list):
                 percentages = []
                 for num in num_list:
@@ -103,7 +101,6 @@ if 'football_data' in path.name:
                     percent = part / whole
                     percentages.append(percent)
                 return percentages
-
 
             played = len(home_matches) + len(away_matches)
             print(f"Matches played: {played}")
