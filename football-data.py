@@ -12,6 +12,32 @@ if 'football_data' in path.name:
     conceded = df['Goals_Against'].sum()
     played = df['Result (W/L/D)'].count()
     results = df['Result (W/L/D)'].tolist()
+    home_matches = df[df['Home/Away'] == 'H']
+    home_goals_for = home_matches['Goals_For'].tolist()
+    home_goals_against = home_matches['Goals_Against'].tolist()
+    home_goal_diff = home_matches['Goal_Difference'].tolist()
+    home_results = home_matches['Result (W/L/D)'].tolist()
+    home_points = home_results.count('W') * 3 + home_results.count('D') * 1
+    total_home_goals_for = sum(home_goals_for)
+    total_home_goals_against = sum(home_goals_against)
+    total_home_goal_diff = sum(home_goal_diff)
+
+    away_matches = df[df['Home/Away'] == 'A']
+    away_goals_for = away_matches['Goals_For'].tolist()
+    away_goals_against = away_matches['Goals_Against'].tolist()
+    away_goal_diff = away_matches['Goal_Difference'].tolist()
+    away_results = away_matches['Result (W/L/D)'].tolist()
+    away_points = away_results.count('W') * 3 + away_results.count('D') * 1
+    total_away_goals_for = sum(away_goals_for)
+    total_away_goals_against = sum(away_goals_against)
+    total_away_goal_diff = sum(away_goal_diff)
+
+    matches_played = len(home_results) + len(away_results)
+    total_points = home_points + away_points
+    points_per_match = total_points / matches_played
+    total_goals_for = total_home_goals_for + total_away_goals_for
+    total_goals_against = total_home_goals_against + total_away_goals_against
+    total_goal_diff = total_home_goal_diff + total_away_goal_diff
     print("Options")
     print("1. Statistics\n2. Analysis\n3. Charts\n4. Simulate\n5. Exit")
     while True:
@@ -38,18 +64,14 @@ if 'football_data' in path.name:
                 plt.ylabel("Goal Difference")
                 plt.show()
             elif chart == 'c':
-                home_matches = df[df['Home/Away'] == 'H']
-                home_results_list = home_matches['Result (W/L/D)'].tolist()
-                away_matches = df[df['Home/Away'] == 'A']
-                away_results_list = away_matches['Result (W/L/D)'].tolist()
                 fig, (ax1, ax2) = plt.subplots(1, 2)
                 ax1.bar(['W', 'L', 'D'],
-                        [home_results_list.count('W'), home_results_list.count('L'), home_results_list.count('D')])
+                        [home_results.count('W'), home_results.count('L'), home_results.count('D')])
                 ax1.set_title('First Plot')
                 ax2.bar(['W', 'L', 'D'],
-                        [away_results_list.count('W'), away_results_list.count('L'), away_results_list.count('D')])
+                        [away_results.count('W'), away_results.count('L'), away_results.count('D')])
                 ax2.set_title('Second Plot')
-                plt.ylim(top=max(home_results_list.count('W'), home_results_list.count('L'), home_results_list.count('D')))
+                plt.ylim(top=max(home_results.count('W'), home_results.count('L'), home_results.count('D')))
                 plt.tight_layout()
                 plt.show()
             elif chart == 'd':
@@ -65,76 +87,79 @@ if 'football_data' in path.name:
             else:
                 print("Chart not available")
         elif choice == '4':
-            results = df['Result (W/L/D)'].tolist()
-            fixtures = input("Fixtures (example = HHA): ")
-            letters = []
-            for item in fixtures:
-                if item in ['H', 'A']:
-                    letters.append(item)
-            print(letters)
-
-            home_matches = df[df['Home/Away'] == 'H']
-            home_goals_for = home_matches['Goals_For'].tolist()
-            home_goals_against = home_matches['Goals_Against'].tolist()
-            away_matches = df[df['Home/Away'] == 'A']
-            away_goals_for = away_matches['Goals_For'].tolist()
-            away_goals_against = away_matches['Goals_Against'].tolist()
-
             def get_nums(data):
-                output = []
+                nums = []
                 for entry in data:
-                    if entry not in output:
-                        output.append(int(entry))
-                return output
+                    if entry not in nums:
+                        nums.append(int(entry))
+                return nums
+
+
             def get_prob(data, num_list):
-                prob_per_num = []
-                for number in num_list:
-                    p = data.count(number)
-                    w = len(data)
-                    per = p / w
-                    prob_per_num.append(per)
-                return prob_per_num
+                percentages = []
+                for num in num_list:
+                    part = data.count(num)
+                    whole = len(data)
+                    percent = part / whole
+                    percentages.append(percent)
+                return percentages
 
-            scores = []
-            for item in letters:
-                res = []
-                if item == 'H':
-                    a = get_nums(home_goals_for)
-                    b = get_prob(home_goals_for, a)
-                    gf = np.random.choice(a, p=b)
-                    a = get_nums(home_goals_against)
-                    b = get_prob(home_goals_against, a)
-                    ga = np.random.choice(a, p=b)
-                    res.append(gf)
-                    res.append(ga)
-                    scores.append(res)
-                elif item == 'A':
-                    a = get_nums(away_goals_for)
-                    b = get_prob(away_goals_for, a)
-                    gf = np.random.choice(a, p=b)
-                    a = get_nums(away_goals_against)
-                    b = get_prob(away_goals_against, a)
-                    ga = np.random.choice(a, p=b)
-                    res.append(gf)
-                    res.append(ga)
-                    scores.append(res)
-            print(scores)
 
-            goals_for = []
-            goals_against = []
-            for item in scores:
-                goals_for.append(item[0])
-                goals_against.append(item[1])
+            played = len(home_matches) + len(away_matches)
+            print(f"Matches played: {played}")
+            remaining = 38 - played
+            print(f"Matches remaining: {remaining}")
+            schedule = list(input("Input schedule (example = HHA): "))
+            if len(schedule) == remaining:
+                count = 0
+                for match in schedule:
+                    if match not in ['H', 'A']:
+                        count += 1
 
-            result = []
-            for item in scores:
-                if item[0] > item[1]:
-                    result.append('W')
-                elif item[0] < item[1]:
-                    result.append('L')
-                elif item[0] == item[1]:
-                    result.append('D')
-            print(result)
+                if count == 0:
+                    print(schedule)
+                    scores = []
+                    for match in schedule:
+                        res = []
+                        if match == 'H':
+                            choices = get_nums(home_goals_for)
+                            probability = get_prob(home_goals_for, choices)
+                            gf = np.random.choice(choices, p=probability)
+                            choices = get_nums(home_goals_against)
+                            probability = get_prob(home_goals_against, choices)
+                            ga = np.random.choice(choices, p=probability)
+                            res.append(gf)
+                            res.append(ga)
+                            scores.append(res)
+                        elif match == 'A':
+                            choices = get_nums(away_goals_for)
+                            probability = get_prob(away_goals_for, choices)
+                            gf = np.random.choice(choices, p=probability)
+                            choices = get_nums(away_goals_against)
+                            probability = get_prob(away_goals_against, choices)
+                            ga = np.random.choice(choices, p=probability)
+                            res.append(gf)
+                            res.append(ga)
+                            scores.append(res)
+                    print(scores)
+
+                    goals_for = []
+                    goals_against = []
+                    results = []
+                    for score in scores:
+                        goals_for.append(score[0])
+                        goals_against.append(score[1])
+                        if score[0] > score[1]:
+                            results.append('W')
+                        elif score[0] < score[1]:
+                            results.append('L')
+                        elif score[0] == score[1]:
+                            results.append('D')
+                    print(results)
+                else:
+                    print("Invalid input detected! Matches must only be H or A")
+            else:
+                print("Incorrect length of matches")
         elif choice == '5':
             break
         else:
