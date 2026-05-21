@@ -131,7 +131,6 @@ if 'football_data' in path.name:
                         count += 1
 
                 if count == 0:
-                    print(schedule)
                     scores = []
                     for match in schedule:
                         res = []
@@ -155,7 +154,6 @@ if 'football_data' in path.name:
                             res.append(gf)
                             res.append(ga)
                             scores.append(res)
-                    print(scores)
 
                     goals_for = []
                     goals_against = []
@@ -169,7 +167,13 @@ if 'football_data' in path.name:
                             results.append('L')
                         elif score[0] == score[1]:
                             results.append('D')
-                    print(results)
+
+                    data = {'Home/Away': [i for i in schedule],
+                            'Goals_For': [i for i in goals_for],
+                            'Goals_Against': [i for i in goals_against],
+                            'Results (W/L/D)': [i for i in results]}
+                    df = pd.DataFrame(data)
+                    print(df.to_string())
                 else:
                     print("Invalid input detected! Matches must only be H or A")
             else:
