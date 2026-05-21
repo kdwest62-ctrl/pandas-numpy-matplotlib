@@ -61,9 +61,10 @@ while True:
             weights = np.ones(window_size) / window_size
             return np.convolve(d, weights, mode='valid')
         column_data = df['units_sold'].tolist()
-        print(column_data)
+        print(f"Units sold (per transaction): {column_data}")
         data = np.array(column_data)
-        print(moving_average(data, 3))
+        window = int(input("Window size: "))
+        print(moving_average(data, window))
     elif select == '6':
         break
     else:
