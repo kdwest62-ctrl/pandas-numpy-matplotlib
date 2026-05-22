@@ -23,8 +23,6 @@ while True:
         for item in data:
             if item not in products:
                 products.append(item)
-        print(products)
-
         sales = []
         units_sold = []
         for item in products:
@@ -33,8 +31,10 @@ while True:
             units_sold.append(sum(units))
             sale = product['sales'].tolist()
             sales.append(round(sum(sale), 2))
-        print(units_sold)
-        print(sales)
+        data = {'product_name': [i for i in products], 'units_sold': [i for i in units_sold],
+                'sales': [i for i in sales]}
+        df = pd.DataFrame(data)
+        print(df.to_string())
     elif select == '3':
         pass
     elif select == '4':
