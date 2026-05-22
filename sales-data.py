@@ -18,23 +18,23 @@ while True:
     if select == '1':
         print(df.to_string())
     elif select == '2':
+        data = df['product_name'].tolist()
         products = []
-        for item in df['product_name'].to_list():
+        for item in data:
             if item not in products:
                 products.append(item)
+        print(products)
 
-        items_sold = []
+        sales = []
+        units_sold = []
         for item in products:
-            result = df.loc[df['product_name'] == item, 'units_sold']
-            items_sold.append(sum(result))
-        b = dict(zip(products, items_sold))
-        print(b)
-
-        for k, v in b.items():
-            if max(b.values()) == b[k]:
-                print(f"Best seller: {k} with {v} units sold")
-            elif min(b.values()) == b[k]:
-                print(f"Low seller: {k} with {v} units sold")
+            product = df[df['product_name'] == item]
+            units = product['units_sold'].tolist()
+            units_sold.append(sum(units))
+            sale = product['sales'].tolist()
+            sales.append(round(sum(sale), 2))
+        print(units_sold)
+        print(sales)
     elif select == '3':
         pass
     elif select == '4':
