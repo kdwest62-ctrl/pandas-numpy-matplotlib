@@ -19,7 +19,23 @@ while True:
         print("a. Product\nb. Category\nc. Region")
         choice = input("Choose stat (letter): ")
         if choice == 'a':
-            pass
+            column_data = df['product_name'].tolist()
+            products = []
+            for item in column_data:
+                if item not in products:
+                    products.append(item)
+            sales = []
+            units_sold = []
+            for item in products:
+                product = df[df['product_name'] == item]
+                units = product['units_sold'].tolist()
+                units_sold.append(sum(units))
+                sale = product['sales'].tolist()
+                sales.append(round(sum(sale), 2))
+            data = {'product_name': [i for i in products], 'units_sold': [i for i in units_sold],
+                    'sales': [i for i in sales]}
+            pr = pd.DataFrame(data)
+            print(pr.to_string())
         elif choice == 'b':
             pass
         elif choice == 'c':
