@@ -46,7 +46,41 @@ while True:
             df = pd.DataFrame(data)
             print(df.to_string())
         elif choice == 'b':
-            pass
+            img = df[df['content_type'] == 'Image']
+            img_likes = img['likes'].tolist()
+            img_shares = img['shares'].tolist()
+            img_comments = img['comments'].tolist()
+
+            vid = df[df['content_type'] == 'Video']
+            vid_likes = vid['likes'].tolist()
+            vid_shares = vid['shares'].tolist()
+            vid_comments = vid['comments'].tolist()
+
+            txt = df[df['content_type'] == 'Text']
+            txt_likes = txt['likes'].tolist()
+            txt_shares = txt['shares'].tolist()
+            txt_comments = txt['comments'].tolist()
+
+            link_likes = df[df['content_type'] == 'Link']['likes'].values[0]
+            link_shares = df[df['content_type'] == 'Link']['shares'].values[0]
+            link_comments = df[df['content_type'] == 'Link']['comments'].values[0]
+
+            reel_likes = df[df['content_type'] == 'Reel']['likes'].values[0]
+            reel_shares = df[df['content_type'] == 'Reel']['shares'].values[0]
+            reel_comments = df[df['content_type'] == 'Reel']['comments'].values[0]
+
+            carousel_likes = df[df['content_type'] == 'Carousel']['likes'].values[0]
+            carousel_shares = df[df['content_type'] == 'Carousel']['shares'].values[0]
+            carousel_comments = df[df['content_type'] == 'Carousel']['comments'].values[0]
+
+            data = {'content_type': ['Image', 'Video', 'Text', 'Link', 'Reel', 'Carousel'],
+                    'likes': [sum(img_likes), sum(vid_likes), sum(txt_likes), link_likes, reel_likes, carousel_likes],
+                    'shares': [sum(img_shares), sum(vid_shares), sum(txt_shares), link_shares, reel_shares,
+                               carousel_shares],
+                    'comments': [sum(img_comments), sum(vid_comments), sum(txt_comments), link_comments, reel_comments,
+                                 carousel_comments]}
+            df = pd.DataFrame(data)
+            print(df.to_string())
         elif choice == 'c':
             pass
         elif choice == 'd':
