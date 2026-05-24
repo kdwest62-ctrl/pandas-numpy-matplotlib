@@ -10,6 +10,13 @@ options = ["1. CSV",
            "5. Exit"]
 for option in options:
     print(option)
+
+ig = df[df['platform'] == 'Instagram']
+fb = df[df['platform'] == 'Facebook']
+twt = df[df['platform'] == 'Twitter']
+img = df[df['content_type'] == 'Image']
+vid = df[df['content_type'] == 'Video']
+txt = df[df['content_type'] == 'Text']
 while True:
     select = input("Select option (number): ")
     if select == '1':
@@ -24,17 +31,14 @@ while True:
             print(stat)
         choice = input("Choose stat (letter): ")
         if choice == 'a':
-            ig = df[df['platform'] == 'Instagram']
             ig_likes = ig['likes'].tolist()
             ig_shares = ig['shares'].tolist()
             ig_comments = ig['comments'].tolist()
 
-            fb = df[df['platform'] == 'Facebook']
             fb_likes = fb['likes'].tolist()
             fb_shares = fb['shares'].tolist()
             fb_comments = fb['comments'].tolist()
 
-            twt = df[df['platform'] == 'Twitter']
             twt_likes = twt['likes'].tolist()
             twt_shares = twt['shares'].tolist()
             twt_comments = twt['comments'].tolist()
@@ -43,20 +47,17 @@ while True:
                     'likes': [sum(ig_likes), sum(fb_likes), sum(twt_likes)],
                     'shares': [sum(ig_shares), sum(fb_shares), sum(twt_shares)],
                     'comments': [sum(ig_comments), sum(fb_comments), sum(twt_comments)]}
-            df = pd.DataFrame(data)
-            print(df.to_string())
+            engage_pl = pd.DataFrame(data)
+            print(engage_pl.to_string())
         elif choice == 'b':
-            img = df[df['content_type'] == 'Image']
             img_likes = img['likes'].tolist()
             img_shares = img['shares'].tolist()
             img_comments = img['comments'].tolist()
 
-            vid = df[df['content_type'] == 'Video']
             vid_likes = vid['likes'].tolist()
             vid_shares = vid['shares'].tolist()
             vid_comments = vid['comments'].tolist()
 
-            txt = df[df['content_type'] == 'Text']
             txt_likes = txt['likes'].tolist()
             txt_shares = txt['shares'].tolist()
             txt_comments = txt['comments'].tolist()
@@ -79,8 +80,8 @@ while True:
                                carousel_shares],
                     'comments': [sum(img_comments), sum(vid_comments), sum(txt_comments), link_comments, reel_comments,
                                  carousel_comments]}
-            df = pd.DataFrame(data)
-            print(df.to_string())
+            engage_ct = pd.DataFrame(data)
+            print(engage_ct.to_string())
         elif choice == 'c':
             pass
         elif choice == 'd':
@@ -93,7 +94,13 @@ while True:
         print("a. Platform\nb. Content Type")
         choice = input("Choose stat (letter): ")
         if choice == 'a':
-            pass
+            ig_reach = ig['reach'].tolist()
+            fb_reach = fb['reach'].tolist()
+            twt_reach = twt['reach'].tolist()
+            data = {'platform': ['Instagram', 'Facebook', 'Twitter'],
+                    'reach': [sum(ig_reach), sum(fb_reach), sum(twt_reach)]}
+            reach_pl = pd.DataFrame(data)
+            print(reach_pl.to_string())
         elif choice == 'b':
             pass
         else:
