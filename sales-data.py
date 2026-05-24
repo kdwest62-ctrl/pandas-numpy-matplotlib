@@ -56,7 +56,14 @@ while True:
         else:
             print("Choice not available")
     elif select == '5':
-        pass
+    	def moving_average(d, window_size):
+			weights = np.ones(window_size) / window_size
+			return np.convolve(d, weights, mode='valid')
+        column_data = df['units_sold'].tolist()
+        print(f"Units sold (per transaction): {column_data}")
+        data = np.array(column_data)
+        window = int(input("Window size: "))
+        print(moving_average(data, window))
     elif select == '6':
         print("Program closed")
         break
