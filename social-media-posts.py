@@ -111,7 +111,18 @@ while True:
             reach_pl = pd.DataFrame(data)
             print(reach_pl.to_string())
         elif choice == 'b':
-            pass
+            img_reach = img['reach'].tolist()
+            vid_reach = vid['reach'].tolist()
+            txt_reach = txt['reach'].tolist()
+
+            link_reach = df[df['content_type'] == 'Link']['reach'].values[0]
+            reel_reach = df[df['content_type'] == 'Reel']['reach'].values[0]
+            carousel_reach = df[df['content_type'] == 'Carousel']['reach'].values[0]
+
+            data = {'content_type': ['Image', 'Video', 'Text', 'Link', 'Reel', 'Carousel'],
+                    'reach': [sum(img_reach), sum(vid_reach), sum(txt_reach), link_reach, reel_reach, carousel_reach]}
+            reach_ct = pd.DataFrame(data)
+            print(reach_ct.to_string())
         else:
             print("Choice not available")
     elif select == '4':
