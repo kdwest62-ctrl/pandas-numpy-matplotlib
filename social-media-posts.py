@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 path = input("CSV path: ")
 df = pd.read_csv(path)
@@ -83,7 +84,15 @@ while True:
             engage_ct = pd.DataFrame(data)
             print(engage_ct.to_string())
         elif choice == 'c':
-            pass
+            post_id = df['post_id'].tolist()
+            for post in post_id:
+                likes = df[df['post_id'] == post]['likes'].values[0]
+                shares = df[df['post_id'] == post]['shares'].values[0]
+                comments = df[df['post_id'] == post]['comments'].values[0]
+                scores = np.array([likes, shares, comments])
+                weights = np.array([0.2, 0.3, 0.5])
+                weighted_score = np.average(scores, weights=weights)
+                print(f"Post ID: {post}, Weighted Score: {weighted_score}")
         elif choice == 'd':
             pass
         elif choice == 'e':
