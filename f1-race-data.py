@@ -4,7 +4,7 @@ import numpy as np
 path = input("CSV path: ")
 df = pd.read_csv(path)
 print("Options")
-options = ["1. Statistics",
+options = ["1. CSV",
            "2. Championship Points Progression",
            "3. Grid Position & Final Position Correlation",
            "4. Tire Degradation Curves",
@@ -47,7 +47,7 @@ while True:
     elif select == '6':
         pass
     elif select == '7':
-		print("Program closed")
+        print("Program closed")
         break
     else:
         print("Option unavailable")
