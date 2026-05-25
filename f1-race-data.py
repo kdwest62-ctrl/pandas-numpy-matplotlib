@@ -47,7 +47,7 @@ while True:
     elif select == '6':
         pass
     elif select == '7':
+		print("Program closed")
         break
     else:
         print("Option unavailable")
-print("Program closed")
