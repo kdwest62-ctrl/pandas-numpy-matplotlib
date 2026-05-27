@@ -17,7 +17,7 @@ while True:
     if select == '1':
         print(df.to_string())
     elif select == '2':
-        print("a. Region\nb. Product\nc. Category")
+        print("a. Region | b. Product | c. Category")
         choice = input("Choose stat (letter): ")
         if choice == 'a':
             column_data = df['region'].tolist()
@@ -36,7 +36,9 @@ while True:
                     sales.append(round(sum(sale), 2))
                 elif column_data.count(region) == 1:
                     units = df[df['region'] == region]['units_sold'].values[0]
-                    sales = df[df['region'] == region]['sales'].values[0]
+                    units_sold.append(units)
+                    sale = df[df['region'] == region]['sales'].values[0]
+                    sales.append(sale)
             data = {'region': [i for i in regions], 'units_sold': [i for i in units_sold],
                     'sales': [i for i in sales]}
             region_analysis = pd.DataFrame(data)
@@ -49,24 +51,52 @@ while True:
                     products.append(item)
             sales = []
             units_sold = []
-            for item in products:
-                product = df[df['product_name'] == item]
-                units = product['units_sold'].tolist()
-                units_sold.append(sum(units))
-                sale = product['sales'].tolist()
-                sales.append(round(sum(sale), 2))
+            for product in products:
+                if column_data.count(product) > 1:
+                    prod = df[df['product_name'] == product]
+                    units = prod['units_sold'].tolist()
+                    units_sold.append(sum(units))
+                    sale = prod['sales'].tolist()
+                    sales.append(round(sum(sale), 2))
+                elif column_data.count(product) == 1:
+                    units = df[df['product_name'] == product]['units_sold'].values[0]
+                    units_sold.append(units)
+                    sale = df[df['product_name'] == product]['sales'].values[0]
+                    sales.append(sale)
             data = {'product_name': [i for i in products], 'units_sold': [i for i in units_sold],
                     'sales': [i for i in sales]}
             pr = pd.DataFrame(data)
             print(pr.to_string())
         elif choice == 'c':
-            pass
+            column_data = df['category'].tolist()
+            categories = []
+            for entry in column_data:
+                if entry not in categories:
+                    categories.append(entry)
+            sales = []
+            units_sold = []
+            for category in categories:
+                if column_data.count(category) > 1:
+                    cat = df[df['category'] == category]
+                    units = cat['units_sold'].tolist()
+                    units_sold.append(sum(units))
+                    sale = cat['sales'].tolist()
+                    sales.append(round(sum(sale), 2))
+                elif column_data.count(category) == 1:
+                    units = df[df['category'] == category]['units_sold'].values[0]
+                    units_sold.append(units)
+                    sale = df[df['category'] == category]['sales'].values[0]
+                    sales.append(sale)
+            data = {'category': [i for i in categories], 'units_sold': [i for i in units_sold],
+                    'sales': [i for i in sales]}
+            cat_analysis = pd.DataFrame(data)
+            print(cat_analysis.to_string())
         else:
             print("Choice not available")
     elif select == '3':
         pass
     elif select == '4':
-        print("a. Region\nb. Product\nc. Category")
+        print("a. Region | b. Product | c. Category")
         choice = input("Choose stat (letter): ")
         if choice == 'a':
             column_data = df['region'].tolist()
