@@ -46,7 +46,7 @@ while True:
     elif select == '3':
         pass
     elif select == '4':
-        print("a. Purchase Frequency\nb. Favorite Product\nc. Favorite Category")
+        print("a. Region\nb. Product\nc. Category")
         choice = input("Choose stat (letter): ")
         if choice == 'a':
             pass
