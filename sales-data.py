@@ -79,7 +79,20 @@ while True:
                     customer = df[df['product_name'] == product]['customer_id'].values[0]
                     print(f"Product: {product} | Customer: {customer}")
         elif choice == 'c':
-            pass
+            column_data = df['category'].tolist()
+            categories = []
+            for entry in column_data:
+                if entry not in categories:
+                    categories.append(entry)
+            for category in categories:
+                if column_data.count(category) > 1:
+                    cat = df[df['category'] == category]
+                    customers = cat['customer_id'].tolist()
+                    customers = set(customers)
+                    print(f"Category: {category} | Customers: {customers}")
+                elif column_data.count(category) == 1:
+                    customer = df[df['category'] == category]['customer_id'].values[0]
+                    print(f"Category: {category} | Customer: {customer}")
         else:
             print("Choice not available")
     elif select == '5':
