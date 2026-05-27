@@ -17,9 +17,11 @@ while True:
     if select == '1':
         print(df.to_string())
     elif select == '2':
-        print("a. Product\nb. Category\nc. Region")
+        print("a. Region\nb. Product\nc. Category")
         choice = input("Choose stat (letter): ")
-        if choice == 'a':
+		if choice == 'a':
+			pass
+        elif choice == 'b':
             column_data = df['product_name'].tolist()
             products = []
             for item in column_data:
@@ -37,8 +39,6 @@ while True:
                     'sales': [i for i in sales]}
             pr = pd.DataFrame(data)
             print(pr.to_string())
-        elif choice == 'b':
-            pass
         elif choice == 'c':
             pass
         else:
