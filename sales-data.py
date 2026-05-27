@@ -64,7 +64,20 @@ while True:
                     customer = df[df['region'] == region]['customer_id'].values[0]
                     print(f"Region: {region} | Customer: {customer}")
         elif choice == 'b':
-            pass
+            column_data = df['product_name'].tolist()
+            products = []
+            for entry in column_data:
+                if entry not in products:
+                    products.append(entry)
+            for product in products:
+                if column_data.count(product) > 1:
+                    prod = df[df['product_name'] == product]
+                    customers = prod['customer_id'].tolist()
+                    customers = set(customers)
+                    print(f"Product: {product} | Customers: {customers}")
+                elif column_data.count(product) == 1:
+                    customer = df[df['product_name'] == product]['customer_id'].values[0]
+                    print(f"Product: {product} | Customer: {customer}")
         elif choice == 'c':
             pass
         else:
