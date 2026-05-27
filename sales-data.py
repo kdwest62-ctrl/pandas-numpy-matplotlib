@@ -49,7 +49,20 @@ while True:
         print("a. Region\nb. Product\nc. Category")
         choice = input("Choose stat (letter): ")
         if choice == 'a':
-            pass
+            column_data = df['region'].tolist()
+            regions = []
+            for entry in column_data:
+            	if entry not in regions:
+                	regions.append(entry)
+            for region in regions:
+                if column_data.count(region) > 1:
+                	reg = df[df['region'] == region]
+                    customers = reg['customer_id'].tolist()
+                    customers = set(customers)
+                    print(f"Region: {region} | Customers: {customers}")
+                elif column_data.count(region) == 1:
+                    customer = df[df['region'] == region]['customer_id'].values[0]
+                    print(f"Region: {region} | Customer: {customer}")
         elif choice == 'b':
             pass
         elif choice == 'c':
