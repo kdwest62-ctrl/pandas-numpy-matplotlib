@@ -19,8 +19,28 @@ while True:
     elif select == '2':
         print("a. Region\nb. Product\nc. Category")
         choice = input("Choose stat (letter): ")
-		if choice == 'a':
-			pass
+        if choice == 'a':
+            column_data = df['region'].tolist()
+            regions = []
+            for entry in column_data:
+                if entry not in regions:
+                    regions.append(entry)
+            sales = []
+            units_sold = []
+            for region in regions:
+                if column_data.count(region) > 1:
+                    reg = df[df['region'] == region]
+                    units = reg['units_sold'].tolist()
+                    units_sold.append(sum(units))
+                    sale = reg['sales'].tolist()
+                    sales.append(round(sum(sale), 2))
+                elif column_data.count(region) == 1:
+                    units = df[df['region'] == region]['units_sold'].values[0]
+                    sales = df[df['region'] == region]['sales'].values[0]
+            data = {'region': [i for i in regions], 'units_sold': [i for i in units_sold],
+                    'sales': [i for i in sales]}
+            region_analysis = pd.DataFrame(data)
+            print(region_analysis.to_string())
         elif choice == 'b':
             column_data = df['product_name'].tolist()
             products = []
@@ -52,11 +72,11 @@ while True:
             column_data = df['region'].tolist()
             regions = []
             for entry in column_data:
-            	if entry not in regions:
-                	regions.append(entry)
+                if entry not in regions:
+                    regions.append(entry)
             for region in regions:
                 if column_data.count(region) > 1:
-                	reg = df[df['region'] == region]
+                    reg = df[df['region'] == region]
                     customers = reg['customer_id'].tolist()
                     customers = set(customers)
                     print(f"Region: {region} | Customers: {customers}")
@@ -96,9 +116,9 @@ while True:
         else:
             print("Choice not available")
     elif select == '5':
-    	def moving_average(d, window_size):
-			weights = np.ones(window_size) / window_size
-			return np.convolve(d, weights, mode='valid')
+        def moving_average(d, window_size):
+            weights = np.ones(window_size) / window_size
+            return np.convolve(d, weights, mode='valid')
         column_data = df['units_sold'].tolist()
         print(f"Units sold (per transaction): {column_data}")
         data = np.array(column_data)
