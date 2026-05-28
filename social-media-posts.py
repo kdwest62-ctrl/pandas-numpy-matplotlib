@@ -26,7 +26,7 @@ while True:
         stats = ["a. Platform",
                  "b. Content Type",
                  "c. Weighted Score",
-                 "d. Engagement by Hour",
+                 "d. Engagement by Time",
                  "e. Weekday vs Weekend"]
         for stat in stats:
             print(stat)
