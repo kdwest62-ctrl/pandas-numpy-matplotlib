@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 path = input("CSV path: ")
 df = pd.read_csv(path)
@@ -94,7 +95,45 @@ while True:
                 weighted_score = np.average(scores, weights=weights)
                 print(f"Post ID: {post}, Weighted Score: {weighted_score}")
         elif choice == 'd':
-            pass
+            time_list = df['post_time'].tolist()
+            new_list = []
+            for time in time_list:
+                if time[0] == '0':
+                    new_time = f'{time[1]}{time[3]}{time[4]}'
+                    new_list.append(int(new_time))
+                else:
+                    new_time = f'{time[0]}{time[1]}{time[3]}{time[4]}'
+                    new_list.append(int(new_time))
+            new_list.sort()
+            final_list = []
+            for time in new_list:
+                time = str(time)
+                if len(time) == 3:
+                    final_time = f'0{time[0]}:{time[1]}{time[2]}'
+                    final_list.append(final_time)
+                elif len(time) > 3:
+                    final_time = f'{time[0]}{time[1]}:{time[2]}{time[3]}'
+                    final_list.append(final_time)
+            engagements = []
+            for item in final_list:
+                if final_list.count(item) > 1:
+                    hour = df[df['post_time'] == item]
+                    likes = hour['likes'].tolist()
+                    shares = hour['shares'].tolist()
+                    comments = hour['comments'].tolist()
+                    total = likes + shares + comments
+                    engagements.append(total)
+                elif final_list.count(item) == 1:
+                    likes = df[df['post_time'] == item]['likes'].values[0]
+                    shares = df[df['post_time'] == item]['shares'].values[0]
+                    comments = df[df['post_time'] == item]['comments'].values[0]
+                    total = likes + shares + comments
+                    engagements.append(total)
+            plt.bar(final_list, engagements, color='skyblue')
+            plt.xlabel('Time')
+            plt.ylabel('Engagements')
+            plt.title('Engagement by Time')
+            plt.show()
         elif choice == 'e':
             pass
         else:
