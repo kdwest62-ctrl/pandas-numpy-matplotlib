@@ -1,23 +1,28 @@
+import matplotlib.pyplot as plt
 import pandas as pd
 
 path = input("CSV path: ")
 df = pd.read_csv(path)
-print("1. Statistics\n2. Class Performance Heatmap\n3. Exit")
+print("1. Statistics\n2. Average Scores\n3. Exit")
 while True:
     option = input("Select option (number): ")
     if option == '1':
         print(df.to_string())
     elif option == '2':
-        print("a. Students vs Subjects\nb. Performance Matrices\nc. Normalized Score")
-        chart = input("Select chart (letter): ")
-        if chart == 'a':
-            pass
-        elif chart == 'b':
-            pass
-        elif chart == 'c':
-            pass
-        else:
-            print("Chart not available")
+        data = []
+        students = df['student_name'].tolist()
+        for student in students:
+            math = df[df['student_name'] == student]['math_score'].values[0]
+            english = df[df['student_name'] == student]['english_score'].values[0]
+            science = df[df['student_name'] == student]['science_score'].values[0]
+            history = df[df['student_name'] == student]['history_score'].values[0]
+            average = (math + english + science + history) / 4
+            data.append(average)
+        plt.hist(data, bins=5, edgecolor='black')
+        plt.title('')
+        plt.xlabel('Average Scores')
+        plt.ylabel('Number of Students')
+        plt.show()
     elif option == '3':
         break
     else:
