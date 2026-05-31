@@ -24,6 +24,7 @@ while True:
         plt.ylabel('Number of Students')
         plt.show()
     elif option == '3':
+        print("Program closed")
         break
     else:
         print("Option not available")
