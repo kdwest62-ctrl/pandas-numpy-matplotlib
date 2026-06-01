@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from pathlib import Path
+import matplotlib.pyplot as plt
 
 path = Path(input("CSV path: "))
 if 'sales_data' in path.name:
@@ -96,7 +97,48 @@ if 'sales_data' in path.name:
             else:
                 print("Choice not available")
         elif select == '3':
-            pass
+            column_data = df['product_name'].tolist()
+            products = []
+            for entry in column_data:
+                if entry not in products:
+                    products.append(entry)
+            sales = []
+            units_sold = []
+            for product in products:
+                if column_data.count(product) > 1:
+                    prod = df[df['product_name'] == product]
+                    units = prod['units_sold'].tolist()
+                    units_sold.append(sum(units))
+                    sale = prod['sales'].tolist()
+                    sales.append(round(sum(sale), 2))
+                elif column_data.count(product) == 1:
+                    units = df[df['product_name'] == product]['units_sold'].values[0]
+                    units_sold.append(units)
+                    sale = df[df['product_name'] == product]['sales'].values[0]
+                    sales.append(sale)
+
+            units_sold_ref = dict(zip(products, units_sold))
+            units_sold_ref = dict(sorted(units_sold_ref.items(), key=lambda i: i[1], reverse=True))
+            top_3_units_sold = dict(list(units_sold_ref.items())[:3])
+
+            sales_ref = dict(zip(products, sales))
+            sales_ref = dict(sorted(sales_ref.items(), key=lambda i: i[1], reverse=True))
+            top_3_sales = dict(list(sales_ref.items())[:3])
+
+            fig, axs = plt.subplots(1, 2, figsize=(10, 4))
+
+            axs[0].bar([k for k in top_3_units_sold.keys()], [v for v in top_3_units_sold.values()])
+            axs[0].set_title("Top 3")
+            axs[0].set_xlabel("Products")
+            axs[0].set_ylabel("Units Sold")
+
+            axs[1].bar([k for k in top_3_sales.keys()], [v for v in top_3_sales.values()], color="orange")
+            axs[1].set_title("Top 3")
+            axs[1].set_xlabel("Products")
+            axs[1].set_ylabel("Sales")
+
+            plt.tight_layout()
+            plt.show()
         elif select == '4':
             print("a. Region | b. Product | c. Category")
             choice = input("Choose stat (letter): ")
