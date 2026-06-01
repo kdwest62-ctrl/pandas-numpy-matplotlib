@@ -196,8 +196,12 @@ if 'sales_data' in path.name:
             column_data = df['units_sold'].tolist()
             print(f"Units sold (per transaction): {column_data}")
             data = np.array(column_data)
-            window = int(input("Window size: "))
-            print(moving_average(data, window))
+            try:
+                window = int(input("Window size: "))
+            except ValueError:
+                print("Error! Input a number")
+            else:
+                print(moving_average(data, window))
         elif select == '6':
             print("Program closed")
             break
