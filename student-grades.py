@@ -3,7 +3,7 @@ import pandas as pd
 
 path = input("CSV path: ")
 df = pd.read_csv(path)
-print("1. CSV\n2. Average Scores\n3. Bottom 5\n4. Exit")
+print("1. CSV\n2. Average Scores\n3. Bottom 5\n4. Attendance vs Performance\n5. Exit")
 while True:
     option = input("Select option (number): ")
     if option == '1':
@@ -91,6 +91,42 @@ while True:
         else:
             print("Subject not available")
     elif option == '4':
+        column_data = df['attendance_percent'].tolist()
+        attendance = []
+        for entry in column_data:
+            if entry not in attendance:
+                attendance.append(entry)
+        performance = []
+        for entry in attendance:
+            if column_data.count(entry) > 1:
+                attend = df[df['attendance_percent'] == entry]
+                math = attend['math_score'].tolist()
+                math = sum(math) / len(math)
+                english = attend['english_score'].tolist()
+                english = sum(english) / len(english)
+                science = attend['science_score'].tolist()
+                science = sum(science) / len(science)
+                history = attend['history_score'].tolist()
+                history = sum(history) / len(history)
+                average = (math + english + science + history) / 4
+                performance.append(average)
+            elif column_data.count(entry) == 1:
+                math = df[df['attendance_percent'] == entry]['math_score'].values[0]
+                english = df[df['attendance_percent'] == entry]['english_score'].values[0]
+                science = df[df['attendance_percent'] == entry]['science_score'].values[0]
+                history = df[df['attendance_percent'] == entry]['history_score'].values[0]
+                average = (math + english + science + history) / 4
+                performance.append(average)
+        reference = dict(zip(attendance, performance))
+        sorted_ref = {key: reference[key] for key in sorted(reference)}
+        x = [k for k in sorted_ref.keys()]
+        y = [v for v in sorted_ref.values()]
+        plt.plot(x, y)
+        plt.title("Attendance vs Performance")
+        plt.xlabel("Attendance (%)")
+        plt.ylabel("Average Performance")
+        plt.show()
+    elif option == '5':
         print("Program closed")
         break
     else:
