@@ -15,6 +15,9 @@ if 'sales_data' in path.name:
                "6. Exit"]
     for option in options:
         print(option)
+    def csv_to_excel(excel_name, name_sheet, dst_path, analysis):
+        complete_path = dst_path + '\\' + excel_name + '.xlsx'
+        analysis.to_excel(complete_path, index=False, sheet_name=name_sheet)
     while True:
         select = input("Select option (number): ")
         if select == '1':
@@ -46,6 +49,13 @@ if 'sales_data' in path.name:
                         'sales': [i for i in sales]}
                 region_analysis = pd.DataFrame(data)
                 print(region_analysis.to_string())
+                export = input("Export analysis to Excel file? (y/n): ")
+                if export == 'y':
+                    excel = input("Excel file name: ")
+                    sheet = input("Sheet name: ")
+                    destination = input("Destination path: ")
+                    csv_to_excel(excel, sheet, destination, region_analysis)
+                    print("Export successful!")
             elif choice == 'b':
                 column_data = df['product_name'].tolist()
                 products = []
