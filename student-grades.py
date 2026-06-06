@@ -3,7 +3,14 @@ import pandas as pd
 
 path = input("CSV path: ")
 df = pd.read_csv(path)
-print("1. CSV\n2. Average Scores\n3. Bottom 5\n4. Attendance vs Performance\n5. Exit")
+menu = ["1. CSV",
+        "2. Average Scores",
+        "3. Bottom 5",
+        "4. Attendance vs Performance",
+        "5. Score Threshold",
+        "6. Exit"]
+for i in menu:
+    print(i)
 while True:
     option = input("Select option (number): ")
     if option == '1':
@@ -127,6 +134,69 @@ while True:
         plt.ylabel("Average Performance")
         plt.show()
     elif option == '5':
+        def over(d, baseline):
+            count = 0
+            for e in d:
+                if e >= baseline:
+                    count += 1
+            return count
+        def equal(d, baseline):
+            count = 0
+            for e in d:
+                if e == baseline:
+                    count += 1
+            return count
+        def under(d, baseline):
+            count = 0
+            for e in d:
+                if e < baseline:
+                    count += 1
+            return count
+        def chart(statistics, baseline, names):
+            plt.pie(statistics, labels=names)
+            plt.title(f'Score Threshold: {baseline}')
+            plt.show()
+        subject = input("Subject: ")
+        if subject in ['math', 'english', 'science', 'history']:
+            if subject == 'math':
+                threshold = int(input("Score threshold: "))
+                math_score = df['math_score'].tolist()
+                success = over(math_score, threshold)
+                average = equal(math_score, threshold)
+                failed = under(math_score, threshold)
+                stats = [success, average, failed]
+                label = ['Over', 'Equal', 'Under']
+                chart(stats, threshold, label)
+            elif subject == 'english':
+                threshold = int(input("Score threshold: "))
+                english_score = df['english_score'].tolist()
+                success = over(english_score, threshold)
+                average = equal(english_score, threshold)
+                failed = under(english_score, threshold)
+                stats = [success, average, failed]
+                label = ['Over', 'Equal', 'Under']
+                chart(stats, threshold, label)
+            elif subject == 'science':
+                threshold = int(input("Score threshold: "))
+                science_score = df['science_score'].tolist()
+                success = over(science_score, threshold)
+                average = equal(science_score, threshold)
+                failed = under(science_score, threshold)
+                stats = [success, average, failed]
+                label = ['Over', 'Equal', 'Under']
+                chart(stats, threshold, label)
+            elif subject == 'history':
+                threshold = int(input("Score threshold: "))
+                history_score = df['history_score'].tolist()
+                success = over(history_score, threshold)
+                average = equal(history_score, threshold)
+                failed = under(history_score, threshold)
+                stats = [success, average, failed]
+                label = ['Over', 'Equal', 'Under']
+                chart(stats, threshold, label)
+        else:
+            print("Subject not in list")
+    elif option == '6':
         print("Program closed")
         break
     else:
