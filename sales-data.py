@@ -80,6 +80,13 @@ if 'sales_data' in path.name:
                         'sales': [i for i in sales]}
                 pr = pd.DataFrame(data)
                 print(pr.to_string())
+                export = input("Export analysis to Excel file? (y/n): ")
+                if export == 'y':
+                    excel = input("Excel file name: ")
+                    sheet = input("Sheet name: ")
+                    destination = input("Destination path: ")
+                    csv_to_excel(excel, sheet, destination, pr)
+                    print("Export successful!")
             elif choice == 'c':
                 column_data = df['category'].tolist()
                 categories = []
