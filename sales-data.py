@@ -111,6 +111,13 @@ if 'sales_data' in path.name:
                         'sales': [i for i in sales]}
                 cat_analysis = pd.DataFrame(data)
                 print(cat_analysis.to_string())
+                export = input("Export analysis to Excel file? (y/n): ")
+                if export == 'y':
+                    excel = input("Excel file name: ")
+                    sheet = input("Sheet name: ")
+                    destination = input("Destination path: ")
+                    csv_to_excel(excel, sheet, destination, cat_analysis)
+                    print("Export successful!")
             else:
                 print("Choice not available")
         elif select == '3':
